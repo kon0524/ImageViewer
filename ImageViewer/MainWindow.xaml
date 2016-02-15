@@ -1,0 +1,19 @@
+﻿<Window x:Class="ImageViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525" PreviewMouseWheel="Image_MouseWheel">
+    <DockPanel>
+        <!-- 操作部 -->
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button DockPanel.Dock="Top" Content="等倍" Command="{Binding ScaleReset}" />
+            <TextBlock Text="{Binding Debug}" />
+        </DockPanel>
+        
+        <!-- 画像表示部 -->
+        <Image Name="viewer" Source="{Binding InputImage}" Stretch="None">
+            <Image.LayoutTransform>
+                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+            </Image.LayoutTransform>
+        </Image>
+    </DockPanel>
+</Window>
