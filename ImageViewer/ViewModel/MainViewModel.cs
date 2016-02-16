@@ -21,27 +21,15 @@ namespace ImageViewer.ViewModel
             }
         }
 
-        // 画像サイズ
-        private Size imageSize;
-        public Size ImageSize
-        {
-            get { return imageSize; }
-            private set
-            {
-                imageSize = value;
-                NotifyPropertyChanged("ImageSize");
-            }
-        }
-
         // 画像位置
-        private Point imagePos;
-        public Point ImagePos
+        private Rect imageRect;
+        public Rect ImageRect
         {
-            get { return imagePos; }
+            get { return imageRect; }
             private set
             {
-                imagePos = value;
-                NotifyPropertyChanged("ImagePos");
+                imageRect = value;
+                NotifyPropertyChanged("ImageRect");
             }
         }
 
@@ -121,20 +109,24 @@ namespace ImageViewer.ViewModel
         public void Zoom(int delta, Point center)
         {
             double ratio = (delta > 0) ? 1.1 : 0.9;
-            Size prevImageSize = ImageSize;
-            ImageSize = new Size(ImageSize.Width * ratio, ImageSize.Height * ratio);
+            Size prevImageSize = ImageRect.Size;
+            Point prevImagePos = ImageRect.Location;
+            Size newImageSize = new Size(prevImageSize.Width * ratio, prevImageSize.Height * ratio);
 
             // 画像が表示領域からはみ出していなければ移動しない
-            if (canvas.RenderSize.Width >= ImageSize.Width
-                && canvas.RenderSize.Height >= ImageSize.Height)
+            Point newPos;
+            if (canvas.RenderSize.Width >= newImageSize.Width
+                && canvas.RenderSize.Height >= newImageSize.Height)
             {
-                ImagePos = UpdateImagePos();
+                newPos = UpdateImagePos(newImageSize);
             }
             else
             {
-                ImagePos = new Point(ImagePos.X + (1 - ratio) * center.X, ImagePos.Y + (1 - ratio) * center.Y);
+                newPos = new Point(prevImagePos.X + (1 - ratio) * center.X, prevImagePos.Y + (1 - ratio) * center.Y);
             }
             isFit = false;
+
+            ImageRect = new Rect(newPos, newImageSize);
         }
 
         /// <summary>
@@ -147,10 +139,10 @@ namespace ImageViewer.ViewModel
             if (isFit) return;
 
             // 画像が表示領域からはみ出していなければ移動しない
-            if (canvas.RenderSize.Width >= ImageSize.Width
-                && canvas.RenderSize.Height >= ImageSize.Height) return;
+            if (canvas.RenderSize.Width >= ImageRect.Size.Width
+                && canvas.RenderSize.Height >= ImageRect.Size.Height) return;
 
-            ImagePos = new Point(ImagePos.X + diff.X, ImagePos.Y + diff.Y);
+            ImageRect = new Rect(new Point(ImageRect.Location.X + diff.X, ImageRect.Location.Y + diff.Y), ImageRect.Size);
         }
 
         /// <summary>
@@ -198,18 +190,22 @@ namespace ImageViewer.ViewModel
             double canvasAspect = canvas.RenderSize.Height / canvas.RenderSize.Width;
             double imageAspect = InputImage.Height / InputImage.Width;
 
+            Size newImageSize;
+            Point newImagePos;
             if (canvasAspect < imageAspect)
             {   // 左右に余白が付くケース
-                ImageSize = new Size(canvas.RenderSize.Height / imageAspect, canvas.RenderSize.Height);
-                ImagePos = UpdateImagePos();
+                newImageSize = new Size(canvas.RenderSize.Height / imageAspect, canvas.RenderSize.Height);
+                newImagePos = UpdateImagePos(newImageSize);
             }
             else
             {   // 上下に余白が付くケース
-                ImageSize = new Size(canvas.RenderSize.Width, canvas.RenderSize.Width * imageAspect);
-                ImagePos = UpdateImagePos();
+                newImageSize = new Size(canvas.RenderSize.Width, canvas.RenderSize.Width * imageAspect);
+                newImagePos = UpdateImagePos(newImageSize);
             }
 
             isFit = true;
+
+            ImageRect = new Rect(newImagePos, newImageSize);
         }
 
         /// <summary>
@@ -217,8 +213,9 @@ namespace ImageViewer.ViewModel
         /// </summary>
         private void ImageDotByDot()
         {
-            ImageSize = new Size(InputImage.PixelWidth, InputImage.PixelHeight);
-            ImagePos = UpdateImagePos();
+            Size newImageSize = new Size(InputImage.PixelWidth, InputImage.PixelHeight);
+            Point newImagePos = UpdateImagePos(newImageSize);
+            ImageRect = new Rect(newImagePos, newImageSize);
             isFit = false;
         }
 
@@ -226,10 +223,10 @@ namespace ImageViewer.ViewModel
         /// 画像位置を計算する
         /// </summary>
         /// <returns></returns>
-        private Point UpdateImagePos()
+        private Point UpdateImagePos(Size newSize)
         {
-            double x = (canvas.RenderSize.Width - ImageSize.Width) / 2;
-            double y = (canvas.RenderSize.Height - ImageSize.Height) / 2;
+            double x = (canvas.RenderSize.Width - newSize.Width) / 2;
+            double y = (canvas.RenderSize.Height - newSize.Height) / 2;
             return new Point(x, y);
         }
 
@@ -267,7 +264,11 @@ namespace ImageViewer.ViewModel
         private void windowSizeChenged(object o, SizeChangedEventArgs args)
         {
             if (isFit) ImageFitSize();
-            else ImagePos = UpdateImagePos();
+            else
+            {
+                Point newImagePos = UpdateImagePos(ImageRect.Size);
+                ImageRect = new Rect(newImagePos, ImageRect.Size);
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
         
         <!-- 画像表示部 -->
         <Canvas Name="canvas" Panel.ZIndex="0" MouseLeftButtonDown="canvas_MouseLeftButtonDown" MouseLeftButtonUp="canvas_MouseLeftButtonUp" MouseMove="canvas_MouseMove" MouseLeave="canvas_MouseLeave">
-            <Image Name="viewer" Canvas.Top="{Binding ImagePos.Y}" Canvas.Left="{Binding ImagePos.X}" Source="{Binding InputImage}" Width="{Binding ImageSize.Width}" Height="{Binding ImageSize.Height}">
+            <Image Name="viewer" Canvas.Top="{Binding ImageRect.Location.Y}" Canvas.Left="{Binding ImageRect.Location.X}" Source="{Binding InputImage}" Width="{Binding ImageRect.Size.Width}" Height="{Binding ImageRect.Size.Height}">
                 <!--<Image.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
                 </Image.LayoutTransform>-->
