@@ -63,10 +63,16 @@ namespace ImageViewer.ViewModel
         private Image viewer;
         private bool isFit;
 
-        public MainViewModel(Canvas canvas, Image viewer) 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="viewer"></param>
+        /// <param name="imagePath"></param>
+        public MainViewModel(Canvas canvas, Image viewer, string imagePath) 
         {
-            // test
-            InputImage = new BitmapImage(new Uri(@"C:\Users\sound-k\Pictures\7284e00d8957708e01fb76d9615d7168.JPG"));
+            if (imagePath == null) imagePath = @"C:\Users\sound-k\Pictures\7284e00d8957708e01fb76d9615d7168.JPG";
+            InputImage = new BitmapImage(new Uri(imagePath));
             
             this.canvas = canvas;
             this.viewer = viewer;

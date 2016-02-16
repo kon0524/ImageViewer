@@ -13,5 +13,13 @@ namespace ImageViewer
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            string imagePath = (e.Args.Length != 0) ? e.Args[0] : null;
+
+            // メイン画面を起動
+            MainWindow mainWindow = new MainWindow(imagePath);
+            mainWindow.Show();
+        }
     }
 }

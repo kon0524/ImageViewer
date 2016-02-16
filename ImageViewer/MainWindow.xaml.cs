@@ -26,10 +26,10 @@ namespace ImageViewer
 
         private MainViewModel mainVM;
 
-        public MainWindow()
+        public MainWindow(string imagePath)
         {
             InitializeComponent();
-            mainVM = new MainViewModel(this.canvas, this.viewer);
+            mainVM = new MainViewModel(this.canvas, this.viewer, imagePath);
             this.DataContext = mainVM;
             moving = false;
         }
