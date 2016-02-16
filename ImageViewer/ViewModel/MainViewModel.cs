@@ -132,11 +132,16 @@ namespace ImageViewer.ViewModel
             ImagePos = new Point(ImagePos.X + diff.X, ImagePos.Y + diff.Y);
         }
 
+        /// <summary>
+        /// キー押下イベント
+        /// </summary>
+        /// <param name="key"></param>
         public void KeyDown(Key key)
         {
             switch (key)
             {
                 case Key.Left:
+                    // 次の画像を開く
                     if (index > 0)
                     {
                         index--;
@@ -144,13 +149,17 @@ namespace ImageViewer.ViewModel
                     }
                     break;
                 case Key.Right:
+                    // 前の画像を開く
                     if (index < imageList.Count - 1)
                     {
                         index++;
                         InputImage = new BitmapImage(new Uri(imageList[index]));
                     }
                     break;
-
+                case Key.Space:
+                    // 等倍・フィットを切替える
+                    scaleChangeExecute(null);
+                    break;
                 default:
                     break;
             }

@@ -6,8 +6,8 @@
         <!-- 操作部 -->
         <DockPanel DockPanel.Dock="Bottom" Panel.ZIndex="1">
             <Button DockPanel.Dock="Top" Content="等倍・フィット" Command="{Binding ScaleChange}" />
-            <Button DockPanel.Dock="Top" Content="test" Click="Button_Click" />
-            <TextBlock Text="{Binding Debug}" />
+            <Button DockPanel.Dock="Top" Content="test" Click="Button_Click" Visibility="Collapsed" />
+            <TextBlock Text="{Binding Debug}" Visibility="Collapsed" />
         </DockPanel>
         
         <!-- 画像表示部 -->
