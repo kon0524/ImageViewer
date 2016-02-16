@@ -97,11 +97,22 @@ namespace ImageViewer.ViewModel
         /// 拡大・縮小
         /// </summary>
         /// <param name="delta"></param>
-        public void Zoom(int delta)
+        public void Zoom(int delta, Point center)
         {
             double ratio = (delta > 0) ? 1.1 : 0.9;
+            Size prevImageSize = ImageSize;
             ImageSize = new Size(ImageSize.Width * ratio, ImageSize.Height * ratio);
-            ImagePos = UpdateImagePos();
+
+            // 画像が表示領域からはみ出していなければ移動しない
+            if (canvas.RenderSize.Width >= ImageSize.Width
+                && canvas.RenderSize.Height >= ImageSize.Height)
+            {
+                ImagePos = UpdateImagePos();
+            }
+            else
+            {
+                ImagePos = new Point(ImagePos.X + (1 - ratio) * center.X, ImagePos.Y + (1 - ratio) * center.Y);
+            }
             isFit = false;
         }
 

@@ -41,7 +41,7 @@ namespace ImageViewer
         /// <param name="e"></param>
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            mainVM.Zoom(e.Delta);
+            mainVM.Zoom(e.Delta, e.GetPosition(this.viewer));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
