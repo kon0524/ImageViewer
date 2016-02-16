@@ -98,12 +98,15 @@ namespace ImageViewer.ViewModel
         {
             if (imagePath != null)
             {
+                string ext = System.IO.Path.GetExtension(imagePath).ToUpper();
+                if (ext != ".JPG" && ext != ".JPEG") return;
+
                 InputImage = new BitmapImage(new Uri(imagePath));
                 string directory = System.IO.Path.GetDirectoryName(imagePath);
                 imageList = new List<string>();
                 foreach (string file in System.IO.Directory.GetFiles(directory))
                 {
-                    string ext = System.IO.Path.GetExtension(file).ToUpper();
+                    ext = System.IO.Path.GetExtension(file).ToUpper();
                     if (ext == ".JPG" || ext == ".JPEG") imageList.Add(file);
                 }
                 index = imageList.IndexOf(imagePath);
