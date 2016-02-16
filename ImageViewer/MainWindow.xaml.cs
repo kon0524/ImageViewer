@@ -29,7 +29,7 @@ namespace ImageViewer
         public MainWindow(string imagePath)
         {
             InitializeComponent();
-            mainVM = new MainViewModel(this.canvas, this.viewer, imagePath);
+            mainVM = new MainViewModel(this.canvas, imagePath);
             this.DataContext = mainVM;
             moving = false;
         }
