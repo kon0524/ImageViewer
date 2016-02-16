@@ -94,6 +94,23 @@ namespace ImageViewer.ViewModel
             App.Current.MainWindow.SizeChanged += new SizeChangedEventHandler(windowSizeChenged);
         }
 
+        public void DropImage(string imagePath)
+        {
+            if (imagePath != null)
+            {
+                InputImage = new BitmapImage(new Uri(imagePath));
+                string directory = System.IO.Path.GetDirectoryName(imagePath);
+                imageList = new List<string>();
+                foreach (string file in System.IO.Directory.GetFiles(directory))
+                {
+                    string ext = System.IO.Path.GetExtension(file).ToUpper();
+                    if (ext == ".JPG" || ext == ".JPEG") imageList.Add(file);
+                }
+                index = imageList.IndexOf(imagePath);
+                ImageFitSize();
+            }
+        }
+
         /// <summary>
         /// 拡大・縮小
         /// </summary>
@@ -147,6 +164,7 @@ namespace ImageViewer.ViewModel
                     {
                         index--;
                         InputImage = new BitmapImage(new Uri(imageList[index]));
+                        ImageFitSize();
                     }
                     break;
                 case Key.Right:
@@ -155,6 +173,7 @@ namespace ImageViewer.ViewModel
                     {
                         index++;
                         InputImage = new BitmapImage(new Uri(imageList[index]));
+                        ImageFitSize();
                     }
                     break;
                 case Key.Space:

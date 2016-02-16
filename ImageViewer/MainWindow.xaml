@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ImageViewer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ImageViewer" Height="350" Width="525" PreviewMouseWheel="Image_MouseWheel" KeyDown="Window_KeyDown">
+        Title="ImageViewer" Height="350" Width="525" PreviewMouseWheel="Image_MouseWheel" KeyDown="Window_KeyDown" AllowDrop="True" PreviewDragOver="Window_PreviewDragOver" Drop="Window_Drop">
     <DockPanel>
         <!-- 操作部 -->
         <DockPanel DockPanel.Dock="Bottom" Panel.ZIndex="1">
