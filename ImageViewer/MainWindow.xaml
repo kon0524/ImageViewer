@@ -4,16 +4,26 @@
         Title="MainWindow" Height="350" Width="525" PreviewMouseWheel="Image_MouseWheel">
     <DockPanel>
         <!-- 操作部 -->
-        <DockPanel DockPanel.Dock="Bottom">
-            <Button DockPanel.Dock="Top" Content="等倍" Command="{Binding ScaleReset}" />
+        <DockPanel DockPanel.Dock="Bottom" Panel.ZIndex="1">
+            <Button DockPanel.Dock="Top" Content="等倍・フィット" Command="{Binding ScaleChange}" />
+            <Button DockPanel.Dock="Top" Content="test" Click="Button_Click" />
             <TextBlock Text="{Binding Debug}" />
         </DockPanel>
         
         <!-- 画像表示部 -->
+        <Canvas Name="canvas" Panel.ZIndex="0">
+            <Image Name="viewer" Canvas.Top="{Binding ImagePos.Y}" Canvas.Left="{Binding ImagePos.X}" Source="{Binding InputImage}" Width="{Binding ImageSize.Width}" Height="{Binding ImageSize.Height}">
+                <!--<Image.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                </Image.LayoutTransform>-->
+            </Image>
+        </Canvas>
+        <!--
         <Image Name="viewer" Source="{Binding InputImage}" Stretch="None">
             <Image.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
             </Image.LayoutTransform>
         </Image>
+        -->
     </DockPanel>
 </Window>

@@ -26,7 +26,7 @@ namespace ImageViewer
         public MainWindow()
         {
             InitializeComponent();
-            mainVM = new MainViewModel(this.viewer);
+            mainVM = new MainViewModel(this.canvas, this.viewer);
             this.DataContext = mainVM;
         }
 
@@ -37,16 +37,12 @@ namespace ImageViewer
         /// <param name="e"></param>
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta > 0)
-            {
-                // 拡大
-                mainVM.Scale *= 1.05;
-            }
-            else
-            {
-                // 縮小
-                mainVM.Scale *= 0.95;
-            }
+            mainVM.Zoom(e.Delta);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
