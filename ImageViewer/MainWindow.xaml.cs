@@ -75,5 +75,10 @@ namespace ImageViewer
         {
             mainVM.KeyDown(e.Key);
         }
+
+        private void canvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            moving = false;
+        }
     }
 }
