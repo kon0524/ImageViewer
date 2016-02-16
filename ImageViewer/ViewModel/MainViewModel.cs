@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,6 +62,8 @@ namespace ImageViewer.ViewModel
 
         private Canvas canvas;
         private bool isFit;
+        private List<string> imageList;
+        private int index;
 
         /// <summary>
         /// コンストラクタ
@@ -71,6 +74,14 @@ namespace ImageViewer.ViewModel
         {
             if (imagePath == null) imagePath = @"C:\Users\sound-k\Pictures\7284e00d8957708e01fb76d9615d7168.JPG";
             InputImage = new BitmapImage(new Uri(imagePath));
+            string directory = System.IO.Path.GetDirectoryName(imagePath);
+            imageList = new List<string>();
+            foreach (string file in System.IO.Directory.GetFiles(directory))
+            {
+                string ext = System.IO.Path.GetExtension(file).ToUpper();
+                if (ext == ".JPG" || ext == ".JPEG") imageList.Add(file);
+            }
+            index = imageList.IndexOf(imagePath);
             
             this.canvas = canvas;
 
