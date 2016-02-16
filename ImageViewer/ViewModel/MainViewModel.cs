@@ -121,6 +121,30 @@ namespace ImageViewer.ViewModel
             ImagePos = new Point(ImagePos.X + diff.X, ImagePos.Y + diff.Y);
         }
 
+        public void KeyDown(Key key)
+        {
+            switch (key)
+            {
+                case Key.Left:
+                    if (index > 0)
+                    {
+                        index--;
+                        InputImage = new BitmapImage(new Uri(imageList[index]));
+                    }
+                    break;
+                case Key.Right:
+                    if (index < imageList.Count - 1)
+                    {
+                        index++;
+                        InputImage = new BitmapImage(new Uri(imageList[index]));
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private void ImageFitSize()
         {
             double canvasAspect = canvas.RenderSize.Height / canvas.RenderSize.Width;

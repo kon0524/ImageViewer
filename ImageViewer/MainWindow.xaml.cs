@@ -70,5 +70,10 @@ namespace ImageViewer
                 mainVM.Move(diff);
             }
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            mainVM.KeyDown(e.Key);
+        }
     }
 }
