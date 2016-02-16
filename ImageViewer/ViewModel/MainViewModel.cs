@@ -165,6 +165,9 @@ namespace ImageViewer.ViewModel
             }
         }
 
+        /// <summary>
+        /// 画像を中央フィット表示にする
+        /// </summary>
         private void ImageFitSize()
         {
             double canvasAspect = canvas.RenderSize.Height / canvas.RenderSize.Width;
@@ -184,6 +187,9 @@ namespace ImageViewer.ViewModel
             isFit = true;
         }
 
+        /// <summary>
+        /// 画像を等倍表示する
+        /// </summary>
         private void ImageDotByDot()
         {
             ImageSize = new Size(InputImage.PixelWidth, InputImage.PixelHeight);
@@ -191,6 +197,10 @@ namespace ImageViewer.ViewModel
             isFit = false;
         }
 
+        /// <summary>
+        /// 画像位置を計算する
+        /// </summary>
+        /// <returns></returns>
         private Point UpdateImagePos()
         {
             double x = (canvas.RenderSize.Width - ImageSize.Width) / 2;
@@ -214,11 +224,21 @@ namespace ImageViewer.ViewModel
             }
         }
 
+        /// <summary>
+        /// ウィンドウロード完了イベント
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="args"></param>
         private void windowLoaded(object o, RoutedEventArgs args)
         {
             ImageFitSize();
         }
 
+        /// <summary>
+        /// ウィンドウサイズ変更イベント
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="args"></param>
         private void windowSizeChenged(object o, SizeChangedEventArgs args)
         {
             if (isFit) ImageFitSize();

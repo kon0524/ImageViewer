@@ -49,17 +49,32 @@ namespace ImageViewer
 
         }
 
+        /// <summary>
+        /// 移動開始
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             moving = true;
             prev = e.GetPosition(this.canvas);
         }
 
+        /// <summary>
+        /// 移動終了
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             moving = false;
         }
 
+        /// <summary>
+        /// 移動中
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (moving)
@@ -71,14 +86,24 @@ namespace ImageViewer
             }
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            mainVM.KeyDown(e.Key);
-        }
-
+        /// <summary>
+        /// 移動強制終了
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void canvas_MouseLeave(object sender, MouseEventArgs e)
         {
             moving = false;
+        }
+
+        /// <summary>
+        /// キー押下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            mainVM.KeyDown(e.Key);
         }
     }
 }
