@@ -11,7 +11,7 @@
         </DockPanel>
         
         <!-- 画像表示部 -->
-        <Canvas Name="canvas" Panel.ZIndex="0">
+        <Canvas Name="canvas" Panel.ZIndex="0" MouseLeftButtonDown="canvas_MouseLeftButtonDown" MouseLeftButtonUp="canvas_MouseLeftButtonUp" MouseMove="canvas_MouseMove">
             <Image Name="viewer" Canvas.Top="{Binding ImagePos.Y}" Canvas.Left="{Binding ImagePos.X}" Source="{Binding InputImage}" Width="{Binding ImageSize.Width}" Height="{Binding ImageSize.Height}">
                 <!--<Image.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />

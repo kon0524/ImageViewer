@@ -91,6 +91,11 @@ namespace ImageViewer.ViewModel
             isFit = false;
         }
 
+        public void Move(Point diff)
+        {
+            ImagePos = new Point(ImagePos.X + diff.X, ImagePos.Y + diff.Y);
+        }
+
         private void ImageFitSize()
         {
             double canvasAspect = canvas.RenderSize.Height / canvas.RenderSize.Width;

@@ -21,6 +21,9 @@ namespace ImageViewer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool moving;
+        private Point prev;
+
         private MainViewModel mainVM;
 
         public MainWindow()
@@ -28,6 +31,7 @@ namespace ImageViewer
             InitializeComponent();
             mainVM = new MainViewModel(this.canvas, this.viewer);
             this.DataContext = mainVM;
+            moving = false;
         }
 
         /// <summary>
@@ -43,6 +47,28 @@ namespace ImageViewer
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            moving = true;
+            prev = e.GetPosition(this.canvas);
+        }
+
+        private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            moving = false;
+        }
+
+        private void canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (moving)
+            {
+                Point current = e.GetPosition(this.canvas);
+                Point diff = new Point(current.X - prev.X, current.Y - prev.Y);
+                prev = current;
+                mainVM.Move(diff);
+            }
         }
     }
 }
