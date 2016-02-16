@@ -72,17 +72,18 @@ namespace ImageViewer.ViewModel
         /// <param name="imagePath"></param>
         public MainViewModel(Canvas canvas, string imagePath) 
         {
-            if (imagePath == null) imagePath = @"C:\Users\sound-k\Pictures\7284e00d8957708e01fb76d9615d7168.JPG";
-            InputImage = new BitmapImage(new Uri(imagePath));
-            string directory = System.IO.Path.GetDirectoryName(imagePath);
-            imageList = new List<string>();
-            foreach (string file in System.IO.Directory.GetFiles(directory))
+            if (imagePath != null)
             {
-                string ext = System.IO.Path.GetExtension(file).ToUpper();
-                if (ext == ".JPG" || ext == ".JPEG") imageList.Add(file);
+                InputImage = new BitmapImage(new Uri(imagePath));
+                string directory = System.IO.Path.GetDirectoryName(imagePath);
+                imageList = new List<string>();
+                foreach (string file in System.IO.Directory.GetFiles(directory))
+                {
+                    string ext = System.IO.Path.GetExtension(file).ToUpper();
+                    if (ext == ".JPG" || ext == ".JPEG") imageList.Add(file);
+                }
+                index = imageList.IndexOf(imagePath);
             }
-            index = imageList.IndexOf(imagePath);
-            
             this.canvas = canvas;
 
             // command
@@ -170,6 +171,8 @@ namespace ImageViewer.ViewModel
         /// </summary>
         private void ImageFitSize()
         {
+            if (InputImage == null) return;
+
             double canvasAspect = canvas.RenderSize.Height / canvas.RenderSize.Width;
             double imageAspect = InputImage.Height / InputImage.Width;
 
