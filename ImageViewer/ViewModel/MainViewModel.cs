@@ -91,8 +91,19 @@ namespace ImageViewer.ViewModel
             isFit = false;
         }
 
+        /// <summary>
+        /// 移動
+        /// </summary>
+        /// <param name="diff"></param>
         public void Move(Point diff)
         {
+            // フィット表示中は移動しない
+            if (isFit) return;
+
+            // 画像が表示領域からはみ出していなければ移動しない
+            if (canvas.RenderSize.Width >= ImageSize.Width
+                && canvas.RenderSize.Height >= ImageSize.Height) return;
+
             ImagePos = new Point(ImagePos.X + diff.X, ImagePos.Y + diff.Y);
         }
 
